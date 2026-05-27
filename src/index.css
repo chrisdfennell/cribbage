@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+/* ============================================
+   Cribbage — Premium Game Base Styles
+   Clean, dark-leaning, high-contrast for cards/board
+   ============================================ */
+
+:root {
+  --bg: #0f1115;
+  --bg-elev: #16191f;
+  --board: #3a2f1f;           /* warm wood tone */
+  --board-dark: #2a2216;
+  --text: #e5e3d8;
+  --text-muted: #9a9585;
+  --accent: #c5a26f;          /* classic brass/gold */
+  --accent-2: #8b5e3c;
+  --red-peg: #c14f4f;
+  --blue-peg: #4a7cb8;
+  --green-peg: #4a8f5c;
+  --yellow-peg: #c5a24f;
+  --card-bg: #f8f5eb;
+  --card-border: #2a2520;
+  --success: #4a8f5c;
+  --danger: #c14f4f;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+/* Game-specific utility classes we'll expand */
+.board-container {
+  background: linear-gradient(145deg, var(--board) 0%, var(--board-dark) 100%);
+  border: 12px solid #1f180f;
+  border-radius: 9999px;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+}
+
+.peg {
+  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+  user-select: none;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+}
+
+.phase-banner {
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 4px 16px;
+  border-radius: 9999px;
+  background: rgba(197, 162, 111, 0.15);
+  color: var(--accent);
+  border: 1px solid rgba(197, 162, 111, 0.3);
+}
