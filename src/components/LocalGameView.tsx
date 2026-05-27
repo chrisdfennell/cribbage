@@ -1,9 +1,11 @@
+import { useEffect } from 'react';
 import { useLocalGame } from '../game/useLocalGame';
 import { PlayingCard } from './PlayingCard';
 import { CribbageBoard } from './CribbageBoard';
 import { sfx, unlockAudio } from '../audio/sfx';
 import { scoreHand, scoreCrib } from '../engine/scoring';
-import type { Card } from '../engine';
+import type { Card, PlayerId } from '../engine';
+import { getAIMove, getAIDiscardIndices } from '../game/simpleAI';
 
 interface LocalGameViewProps {
   onExit: () => void;
@@ -22,6 +24,30 @@ export function LocalGameView({ onExit }: LocalGameViewProps) {
   } = game;
 
   const current = state.currentPlayer;
+
+  // Very basic AI auto-play for p2 (computer)
+  useEffect(() => {
+    if (current !== 'p2') return;
+    if (state.phase === 'gameOver') return;
+
+    const timeout = setTimeout(() => {
+      if (state.phase === 'discard') {
+        const indices = getAIDiscardIndices(state, 'p2');
+        game.discard(indices);
+      } else if (state.phase === 'play') {
+        const move = getAIMove(state, 'p2');
+        if (move === 'go') {
+          game.sayGo();
+        } else {
+          game.playCard(move);
+        }
+      } else if (state.phase === 'show' || state.phase === 'roundEnd') {
+        game.advanceToNextRound();
+      }
+    }, 650);
+
+    return () => clearTimeout(timeout);
+  }, [current, state.phase, state.round]);
 
   const isDiscardPhase = state.phase === 'discard';
   const isPlayPhase = state.phase === 'play';

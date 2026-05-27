@@ -93,7 +93,7 @@ function App() {
           >
             <div className="text-3xl">👥</div>
             <div className="font-medium">Local Hotseat</div>
-            <div className="text-xs text-[#9a9585]">Same device • 2–4 players</div>
+            <div className="text-xs text-[#9a9585]">2 players on this device</div>
           </button>
 
           <button
@@ -102,7 +102,7 @@ function App() {
           >
             <div className="text-3xl">🤖</div>
             <div className="font-medium">Vs Computer</div>
-            <div className="text-xs text-[#9a9585]">Strong AI • 3 difficulties</div>
+            <div className="text-xs text-[#9a9585]">Play against AI (basic)</div>
           </button>
 
           <button
