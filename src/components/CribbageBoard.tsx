@@ -40,28 +40,34 @@ export function CribbageBoard({ game, className = '' }: CribbageBoardProps) {
   ];
 
   /**
-   * Convert a player's score (0-121) into a peg position on the board.
-   * This is a simplified but visually satisfying mapping.
+   * Convert score 0-121 to board position.
+   * Traditional layout: 0-30 on outer track going right, then 31-60 on inner track coming back,
+   * then 61-90 outer again, 91-120 inner again, final stretch to 121.
+   * This version is a reasonable visual approximation.
    */
   function getPegPositionForScore(score: number, playerIndex: number, pegIndex: 0 | 1) {
-    // Each player has two parallel tracks of 30 holes (0-29 per track)
-    // We use the two pegs to show progress (front peg on current position, back peg on previous)
-
     const clamped = Math.max(0, Math.min(score, 121));
+    const rowBase = playerIndex === 0 ? 0 : 2;
 
-    // Simple mapping: first 60 points on first track, next on return track
     let track = 0;
-    let positionInTrack = clamped;
+    let pos = clamped;
 
-    if (clamped > 60) {
+    if (clamped <= 30) {
+      track = 0;
+      pos = clamped;
+    } else if (clamped <= 60) {
       track = 1;
-      positionInTrack = clamped - 60;
+      pos = clamped - 30;
+    } else if (clamped <= 90) {
+      track = 0;
+      pos = clamped - 60;
+    } else {
+      track = 1;
+      pos = clamped - 90;
     }
 
-    const rowBase = playerIndex === 0 ? 0 : 2;
     const row = rowBase + track;
-
-    const x = START_X + Math.min(positionInTrack, 29) * HOLE_SPACING;
+    const x = START_X + Math.min(pos, 29) * HOLE_SPACING;
     const y = ROW_Y[row] + (pegIndex === 0 ? -3 : 3);
 
     return { x, y };
@@ -109,6 +115,16 @@ export function CribbageBoard({ game, className = '' }: CribbageBoardProps) {
             {n}
           </text>
         ))}
+
+        {/* Skunk lines (visual markers at 60 and 90) */}
+        {[60, 90].map((score, i) => {
+          const x = START_X + ((score % 30) * HOLE_SPACING);
+          return (
+            <g key={i}>
+              <line x1={x} y1="32" x2={x} y2="114" stroke="#c14f4f" strokeWidth="1.5" opacity="0.35" />
+            </g>
+          );
+        })}
 
         {/* Peg holes */}
         {holes.map((hole) => (
