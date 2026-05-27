@@ -4,7 +4,7 @@ import { PlayingCard } from './PlayingCard';
 import { CribbageBoard } from './CribbageBoard';
 import { sfx, unlockAudio } from '../audio/sfx';
 import { scoreHand, scoreCrib } from '../engine/scoring';
-import type { Card, PlayerId } from '../engine';
+
 import { getAIMove, getAIDiscardIndices } from '../game/simpleAI';
 
 interface LocalGameViewProps {

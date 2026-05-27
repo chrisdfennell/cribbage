@@ -7,7 +7,6 @@ import type { GameState, PlayerId } from '../engine';
 import { getLegalPlays } from '../engine';
 
 export function getAIMove(state: GameState, aiPlayer: PlayerId): number | 'go' {
-  const hand = state.players[aiPlayer]?.hand ?? [];
   const legal = getLegalPlays(state, aiPlayer);
 
   if (legal.length === 0) {
