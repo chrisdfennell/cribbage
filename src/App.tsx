@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { nextRandom } from './engine/rng'
 import { LocalGameView } from './components/LocalGameView'
+import { OnlineGameView } from './components/OnlineGameView'
 
 type GameMode = 'menu' | 'local' | 'ai' | 'online'
 
@@ -38,39 +39,7 @@ function App() {
   }
 
   if (mode === 'online') {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#0f1115] text-[#e5e3d8] p-8">
-        <div className="text-center max-w-md">
-          <h1 className="text-5xl font-semibold tracking-tight mb-4">Online Rooms</h1>
-          <p className="text-[#9a9585] mb-8">Jackbox-style shareable room codes • 2–4 players</p>
-          
-          <div className="flex flex-col gap-3">
-            <button className="px-8 py-3 rounded-full bg-[#c5a26f] text-black font-medium hover:bg-[#d4b17f] transition">
-              Create Room
-            </button>
-            <div className="flex gap-2">
-              <input 
-                type="text" 
-                placeholder="Enter room code" 
-                className="flex-1 px-4 py-3 rounded-full bg-white/5 border border-white/20 text-center font-mono tracking-[4px] uppercase placeholder:text-[#9a9585]"
-              />
-              <button className="px-8 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/20 transition">
-                Join
-              </button>
-            </div>
-          </div>
-        </div>
-        <button 
-          onClick={backToMenu}
-          className="mt-12 px-8 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/20 transition text-sm"
-        >
-          ← Back to Menu
-        </button>
-        <div className="mt-8 text-xs text-[#9a9585] opacity-60">
-          WebSocket server + authoritative engine in Phase 4
-        </div>
-      </div>
-    )
+    return <OnlineGameView onExit={backToMenu} />
   }
 
   // Main Menu
@@ -111,7 +80,7 @@ function App() {
           >
             <div className="text-3xl">🌐</div>
             <div className="font-medium">Online Room</div>
-            <div className="text-xs text-[#9a9585]">Share code • Real-time</div>
+            <div className="text-xs text-[#9a9585]">Supabase Realtime • Free</div>
           </button>
         </div>
 
